@@ -43,8 +43,6 @@ export default function App() {
     return languages.map((language) => (
       <CollapsibleListItem
         text={language.name || ""}
-        continentId={continentId}
-        countryId={countryId}
         key={language.code}
       />
     ));
@@ -58,8 +56,6 @@ export default function App() {
       <CollapsibleListItem
         text={country.name}
         collapsible
-        continentId={continentId}
-        countryId={country.code}
         key={country.code}
       >
         {renderLanguage(country.languages, continentId, country.code)}
@@ -72,7 +68,6 @@ export default function App() {
       <CollapsibleListItem
         text={continent.name}
         collapsible
-        continentId={continent.code}
         key={continent.code}
       >
         {renderCountries(continent.countries, continent.code)}

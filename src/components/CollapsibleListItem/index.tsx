@@ -7,15 +7,11 @@ import { CloseAllContext } from "../App";
 type Props = {
   text: string;
   collapsible?: boolean;
-  continentId: string;
-  countryId?: string;
 };
 
 const CollapsibleListItem: FunctionComponent<Props> = ({
   text,
   collapsible,
-  continentId,
-  countryId,
   children,
 }) => {
   const { open, collapse, close } = useCollapse();
