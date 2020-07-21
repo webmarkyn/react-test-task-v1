@@ -37,8 +37,6 @@ export default function App() {
 
   const renderLanguage = (
     languages: Continents_continents_countries_languages[],
-    continentId: string,
-    countryId: string
   ) => {
     return languages.map((language) => (
       <CollapsibleListItem
@@ -50,7 +48,6 @@ export default function App() {
 
   const renderCountries = (
     countries: Continents_continents_countries[],
-    continentId: string
   ) => {
     return countries.map((country) => (
       <CollapsibleListItem
@@ -58,7 +55,7 @@ export default function App() {
         collapsible
         key={country.code}
       >
-        {renderLanguage(country.languages, continentId, country.code)}
+        {renderLanguage(country.languages)}
       </CollapsibleListItem>
     ));
   };
@@ -70,7 +67,7 @@ export default function App() {
         collapsible
         key={continent.code}
       >
-        {renderCountries(continent.countries, continent.code)}
+        {renderCountries(continent.countries)}
       </CollapsibleListItem>
     ));
   };
