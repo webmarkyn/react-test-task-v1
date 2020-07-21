@@ -20,15 +20,13 @@ type CurrentItemContextType = {
   setCurrentItem?: (newVal: CurrentItemType) => void;
 } & CurrentItemType;
 
-export const CurrentItemContext = React.createContext<CurrentItemContextType>(
-  {}
-);
+export const CurrentItemContext = React.createContext<CurrentItemContextType>({});
 
 export default function App() {
   const { data, loading, error } = useQuery<Continents>(CONTINENTS);
   const [currentItem, setCurrentItem] = useState<CurrentItemType>({});
 
-  const insides = () => {
+  const renderInsides = () => {
     if (loading) return <LinearProgress />;
     if (error || !data) return <Alert severity="error">Error occurred</Alert>;
     const continents = data.continents;
@@ -88,7 +86,7 @@ export default function App() {
 
   return (
     <CurrentItemContext.Provider value={{ ...currentItem, setCurrentItem }}>
-      <Container maxWidth="sm">{insides()}</Container>
+      <Container maxWidth="sm">{renderInsides()}</Container>
     </CurrentItemContext.Provider>
   );
 }
