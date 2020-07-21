@@ -11,22 +11,16 @@ import {
 import { Alert } from "@material-ui/lab";
 import CollapsibleListItem from "../CollapsibleListItem";
 
-type CurrentItemType = {
-  continentId?: string;
-  countryId?: string;
-};
+type CloseAllContextType = {
+  status?: boolean,
+  setCloseAll?: (newVal: boolean) => void;
+}
 
-type CurrentItemContextType = {
-  setCurrentItem?: (newVal: CurrentItemType) => void;
-} & CurrentItemType;
-
-export const CurrentItemContext = React.createContext<CurrentItemContextType>(
-  {}
-);
+export const CloseAllContext = React.createContext<CloseAllContextType>({});
 
 export default function App() {
   const { data, loading, error } = useQuery<Continents>(CONTINENTS);
-  const [currentItem, setCurrentItem] = useState<CurrentItemType>({});
+  const [closeAll, setCloseAll] = useState<boolean>(false);
 
   const insides = () => {
     if (loading) return <LinearProgress />;
@@ -87,8 +81,8 @@ export default function App() {
   };
 
   return (
-    <CurrentItemContext.Provider value={{ ...currentItem, setCurrentItem }}>
+    <CloseAllContext.Provider value={{ status: closeAll, setCloseAll }}>
       <Container maxWidth="sm">{insides()}</Container>
-    </CurrentItemContext.Provider>
+    </CloseAllContext.Provider>
   );
 }

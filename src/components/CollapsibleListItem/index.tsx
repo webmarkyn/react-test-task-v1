@@ -2,7 +2,7 @@ import React, { FunctionComponent, useContext, useEffect } from "react";
 import useCollapse from "../../hooks/useCollapse";
 import { Collapse, List, ListItem, ListItemText } from "@material-ui/core";
 import { ExpandLess, ExpandMore } from "@material-ui/icons";
-import { CurrentItemContext } from "../App";
+import { CloseAllContext } from "../App";
 
 type Props = {
   text: string;
@@ -19,27 +19,26 @@ const CollapsibleListItem: FunctionComponent<Props> = ({
   children,
 }) => {
   const { open, collapse, close } = useCollapse();
-  const currentItem = useContext(CurrentItemContext);
+  const closeAll = useContext(CloseAllContext);
 
-  const handleCurrentItemChange = () => {
-    if (!currentItem || (currentItem.continentId === continentId && !countryId)) return;
-    if (currentItem.continentId !== continentId || currentItem.countryId !== countryId) close();
+  const handleCloseAllChange = () => {
+    if (closeAll.status) close();
   };
 
   const handleClick = () => {
-    if (!collapsible || !currentItem || !currentItem.setCurrentItem) return;
-    if (!open)
-      currentItem.setCurrentItem({
-        continentId,
-        countryId: countryId || undefined,
-      });
-    console.log(currentItem);
-    collapse();
+    if (closeAll && closeAll.setCloseAll){
+      if (collapsible) {
+        closeAll.setCloseAll(false);
+        collapse();
+      } else {
+        closeAll.setCloseAll(true);
+      }
+    }
   };
 
   useEffect(() => {
-    handleCurrentItemChange();
-  }, [currentItem]);
+    handleCloseAllChange();
+  }, [closeAll]);
 
   const renderChildren = () => {
     return (
